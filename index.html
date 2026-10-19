@@ -38,6 +38,11 @@
     .day-date{display:block;margin-top:7px;font-size:14px;font-weight:800}.day-weekday{display:block;margin-top:2px;color:var(--muted);font-size:12px}.today-tag{position:absolute;top:-8px;right:9px;padding:2px 7px;border-radius:999px;background:var(--orange);color:#fff;font-size:10px;font-weight:850}
     .challenge{display:flex;align-items:center;gap:14px;margin-top:18px;padding:17px;border-radius:19px;background:var(--orange-pale)}.challenge-icon{display:grid;place-items:center;flex:0 0 42px;height:42px;border-radius:14px;background:#fffaf2;font-size:21px}.challenge p{margin:0}.challenge-title{font-weight:850}.challenge-note{margin-top:3px!important;color:#7d6a58;font-size:13px}
     .tools{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:23px}.tools-label{font-size:14px;font-weight:800}.tools-note{margin:3px 0 0;color:var(--muted);font-size:12px}.utility{display:flex;gap:8px;flex-wrap:wrap}.utility button,.file-label{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:#fffefa;color:var(--ink);font-size:12px;font-weight:750;cursor:pointer}.utility button:hover,.file-label:hover{border-color:#b8cdbd;background:#f7faf5}.file-label input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+    .sync-panel{margin-top:16px;padding:16px 18px;border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow)}
+    .sync-heading{display:flex;align-items:center;gap:8px;font-weight:850}.sync-status{margin:5px 0 0;color:var(--muted);font-size:12px}.sync-panel details{margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}.sync-panel summary{color:var(--green);font-size:13px;font-weight:800;cursor:pointer}
+    .sync-form{display:flex;align-items:end;flex-wrap:wrap;gap:8px;margin-top:10px}.sync-form label{flex:1 1 180px;color:var(--muted);font-size:12px;font-weight:700}.sync-form input{display:block;width:100%;min-height:42px;margin-top:5px;padding:8px 11px;border:1px solid var(--line);border-radius:11px;background:#fffefa;color:var(--ink);font:inherit}
+    .sync-form button{min-height:42px;padding:0 13px;border:1px solid var(--line);border-radius:11px;background:#fffefa;color:var(--ink);font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+    .sync-form button.primary-sync{border-color:var(--green);background:var(--green);color:#fff}
     .message{min-height:20px;margin:9px 0 0;color:var(--green);font-size:12px}.footer{margin:23px 0 0;color:#879189;text-align:center;font-size:11px}
     @media(min-width:600px){.days{grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}.day{min-height:106px;padding:12px 10px}.day.today{padding:11px 9px}.day-date{font-size:13px}.hero{min-height:250px}.panel{padding:24px}}
     @media(max-width:430px){.page{width:min(100% - 24px,760px);padding-top:18px}.hero{min-height:218px;padding:24px 20px;border-radius:23px}.reader{flex-basis:104px;width:104px;height:128px;margin-right:-8px}.hero-copy{max-width:290px}.ritual{gap:6px;padding:8px 10px;font-size:11px}.panel{padding:18px;border-radius:21px}.primary{min-height:46px;padding:0 12px;font-size:13px}.today-title{font-size:18px}.stats{gap:5px}.stat-value{font-size:21px}.days{gap:8px}.day{min-height:105px;padding:11px 9px;border-radius:15px}.day.today{padding:10px 8px}.tools{align-items:flex-start;flex-direction:column}.utility{width:100%}.utility button,.file-label{flex:1}}
@@ -62,8 +67,20 @@
     <section class="days" id="days" aria-label="21 天閱讀打卡表"></section>
     <section class="challenge" aria-live="polite"><div class="challenge-icon" aria-hidden="true">🏅</div><div><p class="challenge-title" id="challenge-title">挑戰目標：完成至少 15 天</p><p class="challenge-note" id="challenge-note">慢慢累積就好，每一次翻開書都是進步。</p></div></section>
     <section class="tools" aria-label="備份與還原紀錄"><div><div class="tools-label">換裝置也能帶著紀錄</div><p class="tools-note">匯出備份，或從 JSON 檔案還原。</p></div><div class="utility"><button id="export-button" type="button">⬇ 匯出備份</button><label class="file-label">⬆ 匯入備份<input id="import-file" type="file" accept="application/json,.json"></label></div></section>
+    <section class="sync-panel" aria-label="Notion 雲端同步">
+      <div class="sync-heading"><span aria-hidden="true">☁️</span><span>同步至 Notion</span></div>
+      <p class="sync-status" id="sync-status" role="status" aria-live="polite">尚未連線；目前紀錄只保存在此瀏覽器。</p>
+      <details>
+        <summary>設定 Notion 同步代碼</summary>
+        <form class="sync-form" id="sync-form">
+          <label for="sync-key">同步代碼<input id="sync-key" type="password" autocomplete="off" spellcheck="false" placeholder="輸入你的私人同步代碼"></label>
+          <button class="primary-sync" type="submit">連線並同步</button>
+          <button id="clear-sync-key" type="button">清除本機代碼</button>
+        </form>
+      </details>
+    </section>
     <p class="message" id="message" role="status" aria-live="polite"></p>
-    <footer class="footer">你的閱讀紀錄只保存在這個瀏覽器中。</footer>
+    <footer class="footer">已連線時，閱讀紀錄會同步到你的 Notion 資料庫。</footer>
   </main>
   <script>
     (() => {
@@ -71,6 +88,8 @@
       const TOTAL = 21;
       const TARGET = 15;
       const STORAGE_KEY = 'reading-tracker-21-days-v1';
+      const API_KEY_STORAGE_KEY = 'reading-tracker-notion-sync-key-v1';
+      const API_BASE_URL = '';
       const daysEl = document.getElementById('days');
       const checked = new Set();
       const parseDate = value => { const [y,m,d] = value.split('-').map(Number); return new Date(y,m-1,d,12); };
@@ -87,19 +106,93 @@
 
       function showMessage(text, error=false) {
         const el=document.getElementById('message'); el.textContent=text; el.style.color=error?'#a94e3d':'var(--green)';
-        clearTimeout(messageTimer); messageTimer=setTimeout(()=>{el.textContent='';},4000);
+        clearTimeout(messageTimer); messageTimer=setTimeout(()=>{el.textContent='';},5000);
       }
-      function persist() {
+      function setSyncStatus(text,error=false) {
+        const el=document.getElementById('sync-status'); el.textContent=text; el.style.color=error?'#a94e3d':'var(--muted)';
+      }
+      function savedKey() { return localStorage.getItem(API_KEY_STORAGE_KEY) || ''; }
+      function persistLocal() {
         try { localStorage.setItem(STORAGE_KEY,JSON.stringify({version:1,startDate:START,completedDates:[...checked].sort(),updatedAt:new Date().toISOString()})); }
         catch { showMessage('無法儲存：請確認瀏覽器允許此網站使用本機儲存空間。',true); }
       }
-      function load() {
+      async function apiRequest(path,method='GET',body) {
+        if(!API_BASE_URL) throw new Error('後端網址尚未設定');
+        const key=savedKey();
+        if(!key) throw new Error('請先輸入 Notion 同步代碼');
+        const response=await fetch(API_BASE_URL+path,{
+          method,
+          headers:{'Authorization':`Bearer ${key}`,...(body?{'Content-Type':'application/json'}:{})},
+          ...(body?{body:JSON.stringify(body)}:{})
+        });
+        const result=await response.json().catch(()=>({}));
+        if(!response.ok) throw new Error(result.error||'同步失敗');
+        return result;
+      }
+      function loadLocal() {
         try {
           const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');
           if(data && data.startDate===START && Array.isArray(data.completedDates)) data.completedDates.forEach(date=>{if(typeof date==='string' && Array.from({length:TOTAL},(_,i)=>dateFor(i)).includes(date)) checked.add(date);});
         } catch { showMessage('讀取舊紀錄時發生問題，已先顯示空白紀錄。',true); }
       }
-      function toggle(date) { if(checked.has(date)) checked.delete(date); else checked.add(date); persist(); render(); }
+      async function syncFromNotion() {
+        if(!API_BASE_URL) { setSyncStatus('後端部署設定中；目前紀錄只保存在此瀏覽器。'); return false; }
+        if(!savedKey()) { setSyncStatus('尚未連線；目前紀錄只保存在此瀏覽器。'); return false; }
+        try {
+          const data=await apiRequest('/api/checkins');
+          const validDates=new Set(Array.from({length:TOTAL},(_,i)=>dateFor(i)));
+          if(!Array.isArray(data.completedDates)||data.completedDates.some(date=>!validDates.has(date))) throw new Error('Notion 回傳的日期格式不正確');
+          checked.clear(); data.completedDates.forEach(date=>checked.add(date));
+          persistLocal(); render();
+          setSyncStatus(`已連線 Notion，已完成 ${checked.size} 天。`);
+          return true;
+        } catch(error) {
+          setSyncStatus(`Notion 同步失敗：${error.message}`,true);
+          return false;
+        }
+      }
+      async function syncDay(date,completed) {
+        if(!API_BASE_URL||!savedKey()) {
+          setSyncStatus(!API_BASE_URL?'後端部署設定中；目前紀錄只保存在此瀏覽器。':'尚未連線；目前紀錄只保存在此瀏覽器。');
+          return;
+        }
+        const day=Math.round((parseDate(date)-startDate)/86400000)+1;
+        try {
+          await apiRequest(`/api/checkins/${day}`,'PUT',{completed});
+          setSyncStatus('已同步至 Notion。');
+          showMessage('閱讀紀錄已同步至 Notion。');
+        } catch(error) {
+          setSyncStatus(`Notion 同步失敗：${error.message}`,true);
+          showMessage('本機紀錄已保存，但 Notion 尚未更新。',true);
+        }
+      }
+      async function syncAll() {
+        if(!API_BASE_URL||!savedKey()) return false;
+        try {
+          await apiRequest('/api/checkins','PUT',{completedDates:[...checked].sort()});
+          setSyncStatus(`已同步 ${checked.size} 天閱讀紀錄至 Notion。`);
+          return true;
+        } catch(error) {
+          setSyncStatus(`Notion 同步失敗：${error.message}`,true);
+          return false;
+        }
+      }
+      async function connectAndSync() {
+        if(!API_BASE_URL) { setSyncStatus('後端部署設定中，完成後即可連線。',true); return; }
+        const localDates=[...checked];
+        const data=await apiRequest('/api/checkins');
+        const allValid=new Set(Array.from({length:TOTAL},(_,i)=>dateFor(i)));
+        if(!Array.isArray(data.completedDates)||data.completedDates.some(date=>!allValid.has(date))) throw new Error('Notion 回傳的日期格式不正確');
+        const merged=new Set([...localDates,...data.completedDates]);
+        checked.clear(); merged.forEach(date=>checked.add(date));
+        const success=await syncAll();
+        if(success) { persistLocal(); render(); showMessage('本機與 Notion 紀錄已合併。'); }
+      }
+      function toggle(date) {
+        if(checked.has(date)) checked.delete(date); else checked.add(date);
+        const completed=checked.has(date);
+        persistLocal(); render(); syncDay(date,completed);
+      }
       function renderDays() {
         daysEl.innerHTML='';
         for(let i=0;i<TOTAL;i++) {
@@ -133,7 +226,7 @@
         }
         const challengeTitle=document.getElementById('challenge-title'), challengeNote=document.getElementById('challenge-note');
         if(count>=TARGET){challengeTitle.textContent='達成挑戰目標！你已完成至少 15 天';challengeNote.textContent='為自己拍拍手，持續閱讀的你很棒。';}
-        else if(currentIndex>=TOTAL){challengeTitle.textContent=`挑戰結束：完成 ${count} 天` ;challengeNote.textContent=count>=TARGET?'你達成目標了！':'每一頁都算數，帶著這份習慣繼續走。';}
+        else if(currentIndex>=TOTAL){challengeTitle.textContent=`挑戰結束：完成 ${count} 天`;challengeNote.textContent=count>=TARGET?'你達成目標了！':'每一頁都算數，帶著這份習慣繼續走。';}
         else {challengeTitle.textContent=`挑戰目標：完成至少 15 天（還差 ${remaining} 天）`;challengeNote.textContent='慢慢累積就好，每一次翻開書都是進步。';}
       }
       document.getElementById('today-button').addEventListener('click',()=>{if(inChallenge) toggle(localToday);});
@@ -151,11 +244,27 @@
           if(data.startDate && data.startDate!==START) throw new Error('日期不符');
           const imported=new Set(data.completedDates.filter(date=>typeof date==='string'&&validDates.has(date)));
           if(imported.size!==data.completedDates.length) throw new Error('包含無效日期');
-          checked.clear(); imported.forEach(date=>checked.add(date)); persist(); render(); showMessage(`已匯入 ${checked.size} 天閱讀紀錄。`);
-        } catch { showMessage('匯入失敗：請選擇本追蹤表匯出的有效 JSON 備份。',true); }
+          checked.clear(); imported.forEach(date=>checked.add(date)); persistLocal(); render();
+          if(savedKey()&&API_BASE_URL) await syncAll();
+          showMessage(`已匯入 ${checked.size} 天閱讀紀錄。`);
+        } catch(error) { showMessage(`匯入失敗：${error.message||'請選擇本追蹤表匯出的有效 JSON 備份。'}`,true); }
         event.target.value='';
       });
-      load(); render();
+      document.getElementById('sync-form').addEventListener('submit',async event=>{
+        event.preventDefault();
+        const keyInput=document.getElementById('sync-key'), key=keyInput.value.trim();
+        if(!key) { setSyncStatus('請輸入 Notion 同步代碼。',true); return; }
+        localStorage.setItem(API_KEY_STORAGE_KEY,key);
+        setSyncStatus('正在連線並合併本機與 Notion 紀錄…');
+        try { await connectAndSync(); }
+        catch(error) { setSyncStatus(`連線失敗：${error.message}`,true); }
+        keyInput.value='';
+      });
+      document.getElementById('clear-sync-key').addEventListener('click',()=>{
+        localStorage.removeItem(API_KEY_STORAGE_KEY);
+        setSyncStatus('已清除這個瀏覽器的同步代碼；Notion 紀錄不會被刪除。');
+      });
+      loadLocal(); render(); syncFromNotion();
     })();
   </script>
 </body>
