@@ -1,0 +1,164 @@
+���զb 'FileSystem' ���Ѫ̤W���� InitializDefaultDrives �@�~���ѡC
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f4ec">
+  <meta name="description" content="用 21 天建立洗澡後閱讀 15 分鐘的習慣。">
+  <title>21 天閱讀追蹤表</title>
+  <style>
+    :root{color-scheme:light;--ink:#243b35;--muted:#73817a;--paper:#f6f4ec;--card:#fffefa;--green:#426f5c;--green-dark:#315947;--mint:#e7f0e8;--line:#e5e8df;--orange:#edaa69;--orange-pale:#fff0df;--shadow:0 12px 32px rgba(42,66,53,.07)}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC",sans-serif;line-height:1.5}
+    button{font:inherit}
+    .page{width:min(100% - 32px,760px);margin:0 auto;padding:28px 0 48px}
+    .topline{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;color:var(--muted);font-size:13px;font-weight:700;letter-spacing:.04em}
+    .brand{display:flex;align-items:center;gap:8px}.brand-mark{display:grid;place-items:center;width:28px;height:28px;border-radius:9px;background:var(--green);color:white;font-size:15px}
+    .hero{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:240px;padding:30px 26px;border-radius:28px;background:#e6eee4;box-shadow:var(--shadow)}
+    .hero:after{content:"";position:absolute;width:230px;height:230px;border-radius:50%;background:#d7e5d8;right:-58px;top:-86px}
+    .hero-copy{position:relative;z-index:1;max-width:430px}.eyebrow{margin:0 0 9px;color:var(--green);font-size:13px;font-weight:800;letter-spacing:.08em}
+    h1{margin:0;font-size:clamp(30px,7vw,46px);line-height:1.15;letter-spacing:-.04em}
+    .date-range{margin:10px 0 18px;color:#64756b;font-size:14px}
+    .ritual{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px;padding:9px 13px;border:1px solid rgba(66,111,92,.14);border-radius:999px;background:rgba(255,255,255,.72);font-size:13px;font-weight:800}
+    .ritual .arrow{color:#9ba69e}.ritual .watch{color:#a95f2d}
+    .reader{position:relative;z-index:1;flex:0 0 150px;width:150px;height:170px;margin-right:10px}
+    .panel{margin-top:18px;padding:22px;border:1px solid rgba(56,82,66,.06);border-radius:24px;background:var(--card);box-shadow:var(--shadow)}
+    .today-row{display:flex;align-items:center;justify-content:space-between;gap:14px}.today-label{margin:0 0 4px;color:var(--muted);font-size:13px;font-weight:700}.today-title{margin:0;font-size:20px;letter-spacing:-.02em}.today-state{display:inline-flex;align-items:center;gap:6px;margin-top:5px;color:var(--green);font-size:13px;font-weight:750}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--orange)}.dot.done{background:var(--green)}
+    .primary{min-height:48px;padding:0 17px;border:0;border-radius:15px;background:var(--green);color:white;font-weight:800;cursor:pointer;white-space:nowrap;transition:transform .15s,background .15s}
+    .primary:hover{background:var(--green-dark)}.primary:active{transform:scale(.98)}.primary:disabled{background:#dfe5df;color:#78867e;cursor:not-allowed}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+    .stat{min-width:0}.stat-label{display:block;color:var(--muted);font-size:12px;font-weight:650}.stat-value{display:block;margin-top:3px;font-size:23px;font-weight:850;letter-spacing:-.04em}.stat-value small{font-size:13px;color:var(--muted);font-weight:700;letter-spacing:0}
+    .progress-track{height:8px;margin-top:15px;overflow:hidden;border-radius:20px;background:#edf0e9}.progress-fill{height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,#5e9072,#91b681);transition:width .3s}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:28px 2px 13px}.section-head h2{margin:0;font-size:20px;letter-spacing:-.03em}.section-head p{margin:0;color:var(--muted);font-size:12px}
+    .days{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .day{position:relative;min-height:113px;padding:13px 12px;border:1px solid var(--line);border-radius:18px;background:var(--card);text-align:left;color:var(--ink);cursor:pointer;transition:border .15s,transform .15s,background .15s;box-shadow:0 4px 12px rgba(42,66,53,.025)}
+    .day:hover{transform:translateY(-2px);border-color:#b8cdbd}.day.today{border:2px solid var(--orange);padding:12px 11px;background:#fffaf4}.day.completed{background:#f0f6ef;border-color:#d5e4d5}.day:focus-visible,.primary:focus-visible,.utility button:focus-visible,.file-label:focus-within{outline:3px solid #e4aa72;outline-offset:3px}
+    .day-top{display:flex;align-items:center;justify-content:space-between;gap:5px}.day-num{font-size:12px;font-weight:850;color:var(--green)}.day-status{font-size:12px;color:#9ba59d}.day.completed .day-status{color:var(--green)}
+    .day-date{display:block;margin-top:7px;font-size:14px;font-weight:800}.day-weekday{display:block;margin-top:2px;color:var(--muted);font-size:12px}.today-tag{position:absolute;top:-8px;right:9px;padding:2px 7px;border-radius:999px;background:var(--orange);color:#fff;font-size:10px;font-weight:850}
+    .challenge{display:flex;align-items:center;gap:14px;margin-top:18px;padding:17px;border-radius:19px;background:var(--orange-pale)}.challenge-icon{display:grid;place-items:center;flex:0 0 42px;height:42px;border-radius:14px;background:#fffaf2;font-size:21px}.challenge p{margin:0}.challenge-title{font-weight:850}.challenge-note{margin-top:3px!important;color:#7d6a58;font-size:13px}
+    .tools{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:23px}.tools-label{font-size:14px;font-weight:800}.tools-note{margin:3px 0 0;color:var(--muted);font-size:12px}.utility{display:flex;gap:8px;flex-wrap:wrap}.utility button,.file-label{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:#fffefa;color:var(--ink);font-size:12px;font-weight:750;cursor:pointer}.utility button:hover,.file-label:hover{border-color:#b8cdbd;background:#f7faf5}.file-label input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+    .message{min-height:20px;margin:9px 0 0;color:var(--green);font-size:12px}.footer{margin:23px 0 0;color:#879189;text-align:center;font-size:11px}
+    @media(min-width:600px){.days{grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}.day{min-height:106px;padding:12px 10px}.day.today{padding:11px 9px}.day-date{font-size:13px}.hero{min-height:250px}.panel{padding:24px}}
+    @media(max-width:430px){.page{width:min(100% - 24px,760px);padding-top:18px}.hero{min-height:218px;padding:24px 20px;border-radius:23px}.reader{flex-basis:104px;width:104px;height:128px;margin-right:-8px}.hero-copy{max-width:290px}.ritual{gap:6px;padding:8px 10px;font-size:11px}.panel{padding:18px;border-radius:21px}.primary{min-height:46px;padding:0 12px;font-size:13px}.today-title{font-size:18px}.stats{gap:5px}.stat-value{font-size:21px}.days{gap:8px}.day{min-height:105px;padding:11px 9px;border-radius:15px}.day.today{padding:10px 8px}.tools{align-items:flex-start;flex-direction:column}.utility{width:100%}.utility button,.file-label{flex:1}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topline"><div class="brand"><span class="brand-mark" aria-hidden="true">✦</span><span>小小習慣，大大改變</span></div><span>閱讀挑戰・2026</span></div>
+    <header class="hero">
+      <div class="hero-copy"><p class="eyebrow">YOUR 21-DAY READING JOURNEY</p><h1>21 天閱讀<br>追蹤表</h1><p class="date-range">2026.10.19 — 2026.11.08</p><div class="ritual" aria-label="洗澡，閱讀十五分鐘，然後看影片"><span>🛁 洗澡</span><span class="arrow">→</span><span>📖 閱讀 15 分鐘</span><span class="arrow">→</span><span class="watch">▶ 看影片</span></div></div>
+      <svg class="reader" viewBox="0 0 160 180" role="img" aria-label="坐著閱讀的男性插畫" xmlns="http://www.w3.org/2000/svg"><ellipse cx="83" cy="164" rx="59" ry="9" fill="#c8d8c7"/><path d="M40 150c3-19 17-31 38-33l18 5c17 5 28 18 29 36H45z" fill="#527967"/><path d="M68 109c5-9 21-12 31-5l15 29-34 13-25-23z" fill="#567f6c"/><path d="M65 55c3-14 17-22 31-18 13 4 20 17 17 32l-4 20c-3 15-15 24-29 20-13-3-21-15-18-29z" fill="#d89568"/><path d="M64 60c-5-14 3-29 18-34 15-5 31 4 34 19-8-5-15-7-23-5-8 2-15 7-20 15l-3 13z" fill="#303f3b"/><path d="M71 67c3 1 6 1 8-1M96 68c3 1 6 1 8 0" stroke="#513d36" stroke-width="2" stroke-linecap="round"/><path d="M89 81c4 3 9 3 13 0" stroke="#a85f54" stroke-width="2" stroke-linecap="round"/><path d="M49 116c-14 0-25 8-31 22l37 22c7-13 17-22 29-25z" fill="#e5a66e"/><path d="M51 124c9-6 18-8 27-5l46 15-5 24-48-14c-8 4-15 10-21 19l-21-13c4-11 11-20 22-26z" fill="#406b58"/><path d="M42 108c-5 7-8 15-8 23l21 11c4-9 10-15 19-19l-7-15z" fill="#d89568"/><path d="M60 108l33-13c5-2 10 0 12 4 1 4-1 8-5 10l-31 15z" fill="#f2c892"/><path d="M59 110l38-13 21 29-38 13z" fill="#fffaf0" stroke="#527967" stroke-width="3" stroke-linejoin="round"/><path d="M97 97l21 29M80 107l18 26" stroke="#d8ded2" stroke-width="2"/></svg>
+    </header>
+
+    <section class="panel" aria-labelledby="today-heading">
+      <div class="today-row"><div><p class="today-label" id="today-date">今天</p><h2 class="today-title" id="today-heading">準備好今天的閱讀了嗎？</h2><div class="today-state" id="today-state"><span class="dot"></span><span>今天尚未完成</span></div></div><button class="primary" id="today-button" type="button">完成閱讀 ✓</button></div>
+      <div class="stats" aria-live="polite"><div class="stat"><span class="stat-label">完成天數</span><span class="stat-value"><span id="completed-count">0</span><small> / 21 天</small></span></div><div class="stat"><span class="stat-label">目前完成率</span><span class="stat-value"><span id="completion-rate">0</span><small>%</small></span></div><div class="stat"><span class="stat-label">距離目標還差</span><span class="stat-value"><span id="remaining-count">15</span><small> 天</small></span></div></div>
+      <div class="progress-track" role="progressbar" aria-label="閱讀挑戰完成進度" aria-valuemin="0" aria-valuemax="21" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div>
+    </section>
+
+    <div class="section-head"><h2>我的 21 天</h2><p>點選日期，記錄今天的努力</p></div>
+    <section class="days" id="days" aria-label="21 天閱讀打卡表"></section>
+    <section class="challenge" aria-live="polite"><div class="challenge-icon" aria-hidden="true">🏅</div><div><p class="challenge-title" id="challenge-title">挑戰目標：完成至少 15 天</p><p class="challenge-note" id="challenge-note">慢慢累積就好，每一次翻開書都是進步。</p></div></section>
+    <section class="tools" aria-label="備份與還原紀錄"><div><div class="tools-label">換裝置也能帶著紀錄</div><p class="tools-note">匯出備份，或從 JSON 檔案還原。</p></div><div class="utility"><button id="export-button" type="button">⬇ 匯出備份</button><label class="file-label">⬆ 匯入備份<input id="import-file" type="file" accept="application/json,.json"></label></div></section>
+    <p class="message" id="message" role="status" aria-live="polite"></p>
+    <footer class="footer">你的閱讀紀錄只保存在這個瀏覽器中。</footer>
+  </main>
+  <script>
+    (() => {
+      const START = '2026-10-19';
+      const TOTAL = 21;
+      const TARGET = 15;
+      const STORAGE_KEY = 'reading-tracker-21-days-v1';
+      const daysEl = document.getElementById('days');
+      const checked = new Set();
+      const parseDate = value => { const [y,m,d] = value.split('-').map(Number); return new Date(y,m-1,d,12); };
+      const isoDate = date => `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+      const addDays = (date, amount) => { const result = new Date(date); result.setDate(result.getDate()+amount); return result; };
+      const localToday = isoDate(new Date());
+      const startDate = parseDate(START);
+      const dateFor = index => isoDate(addDays(startDate,index));
+      const prettyDate = value => { const d=parseDate(value); return `${d.getMonth()+1} 月 ${d.getDate()} 日`; };
+      const weekdays = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+      const currentIndex = Math.round((parseDate(localToday)-startDate)/86400000);
+      const inChallenge = currentIndex >= 0 && currentIndex < TOTAL;
+      let messageTimer;
+
+      function showMessage(text, error=false) {
+        const el=document.getElementById('message'); el.textContent=text; el.style.color=error?'#a94e3d':'var(--green)';
+        clearTimeout(messageTimer); messageTimer=setTimeout(()=>{el.textContent='';},4000);
+      }
+      function persist() {
+        try { localStorage.setItem(STORAGE_KEY,JSON.stringify({version:1,startDate:START,completedDates:[...checked].sort(),updatedAt:new Date().toISOString()})); }
+        catch { showMessage('無法儲存：請確認瀏覽器允許此網站使用本機儲存空間。',true); }
+      }
+      function load() {
+        try {
+          const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');
+          if(data && data.startDate===START && Array.isArray(data.completedDates)) data.completedDates.forEach(date=>{if(typeof date==='string' && Array.from({length:TOTAL},(_,i)=>dateFor(i)).includes(date)) checked.add(date);});
+        } catch { showMessage('讀取舊紀錄時發生問題，已先顯示空白紀錄。',true); }
+      }
+      function toggle(date) { if(checked.has(date)) checked.delete(date); else checked.add(date); persist(); render(); }
+      function renderDays() {
+        daysEl.innerHTML='';
+        for(let i=0;i<TOTAL;i++) {
+          const date=dateFor(i), d=parseDate(date), complete=checked.has(date), isToday=date===localToday;
+          const button=document.createElement('button'); button.type='button'; button.className=`day${complete?' completed':''}${isToday?' today':''}`;
+          button.setAttribute('aria-pressed',String(complete)); button.setAttribute('aria-label',`Day ${i+1}，${prettyDate(date)}，${weekdays[d.getDay()]}，${complete?'已完成閱讀':'尚未完成閱讀'}${isToday?'，今天':''}`);
+          button.innerHTML=`${isToday?'<span class="today-tag">今天</span>':''}<span class="day-top"><span class="day-num">DAY ${String(i+1).padStart(2,'0')}</span><span class="day-status" aria-hidden="true">${complete?'✓':'○'}</span></span><span class="day-date">${prettyDate(date)}</span><span class="day-weekday">${weekdays[d.getDay()]}</span>`;
+          button.addEventListener('click',()=>toggle(date)); daysEl.append(button);
+        }
+      }
+      function render() {
+        renderDays();
+        const count=checked.size, rate=Math.round(count/TOTAL*100), remaining=Math.max(0,TARGET-count);
+        document.getElementById('completed-count').textContent=count;
+        document.getElementById('completion-rate').textContent=rate;
+        document.getElementById('remaining-count').textContent=remaining;
+        const progress=document.getElementById('progress-fill'); progress.style.width=`${count/TOTAL*100}%`;
+        progress.parentElement.setAttribute('aria-valuenow',String(count));
+        const todayDate=document.getElementById('today-date'), todayTitle=document.getElementById('today-heading'), todayState=document.getElementById('today-state'), todayButton=document.getElementById('today-button');
+        todayDate.textContent=`${prettyDate(localToday)}・${weekdays[parseDate(localToday).getDay()]}`;
+        const todayDone=checked.has(localToday);
+        if(inChallenge) {
+          todayTitle.textContent=todayDone?'今天的閱讀完成了！':'洗澡後，留 15 分鐘給自己。';
+          todayState.innerHTML=`<span class="dot ${todayDone?'done':''}"></span><span>${todayDone?'今天已完成閱讀':'今天尚未完成'}</span>`;
+          todayButton.disabled=false; todayButton.textContent=todayDone?'取消今日完成':'完成閱讀 ✓';
+          todayButton.setAttribute('aria-label',todayDone?'取消今天的閱讀完成紀錄':'記錄今天完成閱讀');
+        } else {
+          todayTitle.textContent=currentIndex<0?'閱讀挑戰即將開始':'21 天挑戰已結束';
+          todayState.innerHTML='<span class="dot"></span><span>今天不在挑戰日期內</span>';
+          todayButton.disabled=true; todayButton.textContent=currentIndex<0?'尚未開始':'挑戰已結束';
+        }
+        const challengeTitle=document.getElementById('challenge-title'), challengeNote=document.getElementById('challenge-note');
+        if(count>=TARGET){challengeTitle.textContent='達成挑戰目標！你已完成至少 15 天';challengeNote.textContent='為自己拍拍手，持續閱讀的你很棒。';}
+        else if(currentIndex>=TOTAL){challengeTitle.textContent=`挑戰結束：完成 ${count} 天` ;challengeNote.textContent=count>=TARGET?'你達成目標了！':'每一頁都算數，帶著這份習慣繼續走。';}
+        else {challengeTitle.textContent=`挑戰目標：完成至少 15 天（還差 ${remaining} 天）`;challengeNote.textContent='慢慢累積就好，每一次翻開書都是進步。';}
+      }
+      document.getElementById('today-button').addEventListener('click',()=>{if(inChallenge) toggle(localToday);});
+      document.getElementById('export-button').addEventListener('click',()=>{
+        const backup={app:'21-day-reading-tracker',version:1,startDate:START,endDate:dateFor(TOTAL-1),dailyGoal:'洗澡後閱讀 15 分鐘',targetDays:TARGET,completedDates:[...checked].sort(),exportedAt:new Date().toISOString()};
+        const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}), url=URL.createObjectURL(blob), a=document.createElement('a');
+        a.href=url; a.download=`21天閱讀追蹤表-${localToday}.json`; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000); showMessage('備份檔已匯出。');
+      });
+      document.getElementById('import-file').addEventListener('change',async event=>{
+        const file=event.target.files?.[0]; if(!file)return;
+        try {
+          const data=JSON.parse(await file.text());
+          if(!data || !Array.isArray(data.completedDates)) throw new Error('格式不符');
+          const validDates=new Set(Array.from({length:TOTAL},(_,i)=>dateFor(i)));
+          if(data.startDate && data.startDate!==START) throw new Error('日期不符');
+          const imported=new Set(data.completedDates.filter(date=>typeof date==='string'&&validDates.has(date)));
+          if(imported.size!==data.completedDates.length) throw new Error('包含無效日期');
+          checked.clear(); imported.forEach(date=>checked.add(date)); persist(); render(); showMessage(`已匯入 ${checked.size} 天閱讀紀錄。`);
+        } catch { showMessage('匯入失敗：請選擇本追蹤表匯出的有效 JSON 備份。',true); }
+        event.target.value='';
+      });
+      load(); render();
+    })();
+  </script>
+</body>
+</html>
+
