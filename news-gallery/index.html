@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050505">
+  <meta name="description" content="四張新聞資訊圖相簿。點擊縮圖即可放大檢視。">
+  <title>新聞資訊圖片相簿</title>
+  <style>
+    :root { color-scheme: dark; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", sans-serif; background: #050505; color: #f5f5f5; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: #050505; }
+    .page { width: min(100% - 32px, 1180px); margin: 0 auto; padding: 30px 0 56px; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 28px; }
+    .back { color: #b8b8b8; text-decoration: none; font-size: 13px; }
+    .back:hover { color: #fff; }
+    .eyebrow { margin: 0 0 7px; color: #a3a3a3; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(26px, 5vw, 38px); letter-spacing: -.035em; }
+    .intro { margin: 8px 0 0; color: #a3a3a3; font-size: 14px; }
+    .count { flex: 0 0 auto; padding: 8px 12px; border: 1px solid #333; border-radius: 999px; color: #d4d4d4; font-size: 12px; }
+    .gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .item { min-width: 0; }
+    .thumb { display: block; width: 100%; padding: 0; overflow: hidden; border: 1px solid #252525; border-radius: 14px; background: #111; color: inherit; cursor: zoom-in; text-align: left; }
+    .thumb:focus-visible, .back:focus-visible, .control:focus-visible { outline: 3px solid #9b9b9b; outline-offset: 3px; }
+    .thumb img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: #111; transition: transform .25s ease, opacity .25s ease; }
+    .thumb:hover img { transform: scale(1.025); opacity: .92; }
+    .caption { display: flex; align-items: baseline; gap: 10px; padding: 12px 14px 14px; }
+    .number { flex: 0 0 auto; color: #8b8b8b; font-size: 12px; font-variant-numeric: tabular-nums; }
+    .caption strong { font-size: 14px; line-height: 1.45; }
+    dialog { width: 100%; height: 100%; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; overflow: hidden; background: #050505; color: #f5f5f5; }
+    dialog::backdrop { background: #050505; }
+    .viewer { display: grid; grid-template-rows: auto minmax(0,1fr) auto; width: 100%; height: 100%; min-height: 0; padding: max(14px, env(safe-area-inset-top)) 16px max(14px, env(safe-area-inset-bottom)); }
+    .viewer-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .viewer-count { color: #b3b3b3; font-size: 13px; font-variant-numeric: tabular-nums; }
+    .control { display: inline-grid; place-items: center; min-width: 44px; min-height: 44px; padding: 0 12px; border: 1px solid #3a3a3a; border-radius: 999px; background: #171717; color: #fff; font: inherit; font-size: 22px; cursor: pointer; }
+    .close { font-size: 24px; }
+    .viewer-main { display: grid; grid-template-columns: 52px minmax(0,1fr) 52px; align-items: center; justify-items: center; gap: 10px; min-height: 0; padding: 10px 0; }
+    .viewer-figure { display: grid; grid-template-rows: minmax(0,1fr) auto; justify-items: center; align-items: center; width: 100%; height: 100%; min-height: 0; margin: 0; }
+    .viewer-image { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
+    .viewer-caption { padding: 10px 8px 0; color: #d4d4d4; font-size: 13px; text-align: center; }
+    .viewer-bottom { height: 8px; }
+    @media (max-width: 640px) {
+      .page { width: min(100% - 24px, 560px); padding-top: 18px; }
+      .topbar { align-items: flex-start; margin-bottom: 22px; }
+      .gallery { grid-template-columns: 1fr; gap: 14px; }
+      .thumb { border-radius: 12px; }
+      .caption { padding: 10px 12px 12px; }
+      .viewer { padding-left: 8px; padding-right: 8px; }
+      .viewer-main { grid-template-columns: 42px minmax(0,1fr) 42px; gap: 4px; }
+      .control { min-width: 40px; min-height: 40px; padding: 0 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="topbar">
+      <a class="back" href="./">← 回到閱讀追蹤表</a>
+      <span class="count">4 張圖片</span>
+    </div>
+    <header>
+      <p class="eyebrow">圖片相簿</p>
+      <h1>新聞資訊圖片</h1>
+      <p class="intro">點擊任一縮圖放大；可用左右方向鍵切換，按 Esc 關閉。</p>
+    </header>
+    <section class="gallery" aria-label="新聞資訊圖片相簿">
+      <article class="item">
+        <button class="thumb" type="button" data-src="01-us-migration.png" data-title="美國南向移民路線轉冷" aria-label="放大檢視：美國南向移民路線轉冷">
+          <img src="01-us-migration.png" alt="美國南向移民路線轉冷資訊圖" width="1680" height="944" loading="eager" fetchpriority="high" decoding="async">
+          <span class="caption"><span class="number">01</span><strong>美國南向移民路線轉冷</strong></span>
+        </button>
+      </article>
+      <article class="item">
+        <button class="thumb" type="button" data-src="02-effective-altruism.png" data-title="有效利他主義的影響與爭議" aria-label="放大檢視：有效利他主義的影響與爭議">
+          <img src="02-effective-altruism.png" alt="有效利他主義的影響與爭議資訊圖" width="1680" height="944" loading="lazy" decoding="async">
+          <span class="caption"><span class="number">02</span><strong>有效利他主義的影響與爭議</strong></span>
+        </button>
+      </article>
+      <article class="item">
+        <button class="thumb" type="button" data-src="03-penguin-colony.png" data-title="地球最大帽帶企鵝群聚地的位置與崩塌" aria-label="放大檢視：地球最大帽帶企鵝群聚地的位置與崩塌">
+          <img src="03-penguin-colony.png" alt="地球最大帽帶企鵝群聚地的位置與崩塌資訊圖" width="1680" height="944" loading="lazy" decoding="async">
+          <span class="caption"><span class="number">03</span><strong>地球最大帽帶企鵝群聚地的位置與崩塌</strong></span>
+        </button>
+      </article>
+      <article class="item">
+        <button class="thumb" type="button" data-src="04-pigeon-history.png" data-title="鴿子：從神聖信使到城市夥伴" aria-label="放大檢視：鴿子：從神聖信使到城市夥伴">
+          <img src="04-pigeon-history.png" alt="鴿子從神聖信使到城市夥伴的歷史資訊圖" width="1680" height="944" loading="lazy" decoding="async">
+          <span class="caption"><span class="number">04</span><strong>鴿子：從神聖信使到城市夥伴</strong></span>
+        </button>
+      </article>
+    </section>
+  </main>
+  <dialog id="viewer" aria-label="圖片放大檢視">
+    <div class="viewer">
+      <div class="viewer-top">
+        <span class="viewer-count" id="viewer-count"></span>
+        <button class="control close" id="close" type="button" aria-label="關閉圖片">×</button>
+      </div>
+      <div class="viewer-main">
+        <button class="control" id="previous" type="button" aria-label="上一張">‹</button>
+        <figure class="viewer-figure">
+          <img class="viewer-image" id="viewer-image" alt="">
+          <figcaption class="viewer-caption" id="viewer-caption"></figcaption>
+        </figure>
+        <button class="control" id="next" type="button" aria-label="下一張">›</button>
+      </div>
+      <div class="viewer-bottom"></div>
+    </div>
+  </dialog>
+  <script>
+    (() => {
+      const cards = [...document.querySelectorAll(".thumb")];
+      const dialog = document.getElementById("viewer");
+      const image = document.getElementById("viewer-image");
+      const caption = document.getElementById("viewer-caption");
+      const count = document.getElementById("viewer-count");
+      let active = 0;
+      const show = index => {
+        active = (index + cards.length) % cards.length;
+        const card = cards[active];
+        image.src = card.dataset.src;
+        image.alt = card.querySelector("img").alt;
+        caption.textContent = card.dataset.title;
+        count.textContent = String(active + 1).padStart(2, "0") + " / " + cards.length;
+        const next = new Image();
+        next.src = cards[(active + 1) % cards.length].dataset.src;
+      };
+      const open = index => { show(index); dialog.showModal(); document.getElementById("close").focus(); };
+      const close = () => dialog.close();
+      cards.forEach((card, index) => card.addEventListener("click", () => open(index)));
+      document.getElementById("close").addEventListener("click", close);
+      document.getElementById("previous").addEventListener("click", () => show(active - 1));
+      document.getElementById("next").addEventListener("click", () => show(active + 1));
+      dialog.addEventListener("click", event => { if (event.target === dialog) close(); });
+      dialog.addEventListener("keydown", event => {
+        if (event.key === "ArrowLeft") { event.preventDefault(); show(active - 1); }
+        if (event.key === "ArrowRight") { event.preventDefault(); show(active + 1); }
+      });
+    })();
+  </script>
+</body>
+</html>
